@@ -8,7 +8,6 @@ LAUNCH_DATE.setDate(LAUNCH_DATE.getDate() + 30);
 
 function useCountdown(target: Date) {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-
   useEffect(() => {
     const tick = () => {
       const now = new Date().getTime();
