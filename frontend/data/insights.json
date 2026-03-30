@@ -1,0 +1,39 @@
+{
+  "insights": [
+    {
+      "type": "keyword",
+      "title": "BEST KEYWORD",
+      "value": "Scale Infrastructure",
+      "description": "82% engagement rate",
+      "metric": "82%"
+    },
+    {
+      "type": "alert",
+      "title": "DROP-OFF ALERT",
+      "value": "Checkout Phase",
+      "description": "14% increase in abandonment",
+      "metric": "14%"
+    },
+    {
+      "type": "insight",
+      "title": "AUTOMATED INSIGHT",
+      "value": "Optimize for Thursdays",
+      "description": "Conversion rates peak between 2PM and 5PM EST on Thursdays. Scheduling automated responses during this window could lift revenue by 12%.",
+      "metric": "Apply Optimization →"
+    },
+    {
+      "type": "source",
+      "title": "ENGAGEMENT SOURCE",
+      "value": "Direct Email",
+      "description": "64% of total engagement",
+      "metric": "64%"
+    },
+    {
+      "type": "source",
+      "title": "ENGAGEMENT SOURCE",
+      "value": "Social Referrals",
+      "description": "22% of total engagement",
+      "metric": "22%"
+    }
+  ]
+}

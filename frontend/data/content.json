@@ -1,0 +1,37 @@
+{
+  "content": [
+    {
+      "id": "1",
+      "title": "Q4 Strategy Roadmap",
+      "platform": "LinkedIn",
+      "reach": "1.2M",
+      "sentiment": "Positive",
+      "sentiment_score": 98.0,
+      "revenue": 42102.00,
+      "published": "Published 2 days ago",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=strategy"
+    },
+    {
+      "id": "2",
+      "title": "SaaS Pricing Trends",
+      "platform": "X / Twitter",
+      "reach": "840k",
+      "sentiment": "Neutral",
+      "sentiment_score": 75.0,
+      "revenue": 28450.00,
+      "published": "Published 5 days ago",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=pricing"
+    },
+    {
+      "id": "3",
+      "title": "Case Study: TechFlow",
+      "platform": "Newsletter",
+      "reach": "120k",
+      "sentiment": "Positive",
+      "sentiment_score": 94.0,
+      "revenue": 19920.00,
+      "published": "Published 1 week ago",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=case"
+    }
+  ]
+}

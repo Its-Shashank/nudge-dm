@@ -1,0 +1,52 @@
+{
+  "campaigns": [
+    {
+      "id": "1",
+      "name": "Summer Flash Sale",
+      "keyword": "SUMMER24",
+      "platform": "Instagram & TikTok",
+      "status": "Active",
+      "dms_sent": 4281,
+      "click_rate": 68.0,
+      "conversion_rate": 12.4,
+      "revenue": 42900.00,
+      "date": "Jun 12, 2024"
+    },
+    {
+      "id": "2",
+      "name": "Q3 Product Launch",
+      "keyword": "INNOVATE",
+      "platform": "LinkedIn Exclusive",
+      "status": "Scheduled",
+      "dms_sent": 1890,
+      "click_rate": 42.0,
+      "conversion_rate": 8.1,
+      "revenue": 0.00,
+      "date": "Jul 01, 2024"
+    },
+    {
+      "id": "3",
+      "name": "Influencer Collab",
+      "keyword": "PARTNER",
+      "platform": "Multi-channel Hub",
+      "status": "Active",
+      "dms_sent": 12402,
+      "click_rate": 82.0,
+      "conversion_rate": 15.2,
+      "revenue": 85530.00,
+      "date": "May 20, 2024"
+    },
+    {
+      "id": "4",
+      "name": "Black Friday Early Bird",
+      "keyword": "BF24",
+      "platform": "Email & Social",
+      "status": "Draft",
+      "dms_sent": 842,
+      "click_rate": 31.0,
+      "conversion_rate": 4.2,
+      "revenue": 0.00,
+      "date": "Pending"
+    }
+  ]
+}
