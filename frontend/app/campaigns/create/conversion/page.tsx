@@ -1,5 +1,12 @@
-import DashboardLayout from '@/components/dashboard-layout'
-import ConversionContent from './conversion-content'
+import dynamic from 'next/dynamic'
+
+const DashboardLayout = dynamic(() => import('@/components/dashboard-layout'), {
+  ssr: false
+})
+
+const ConversionContent = dynamic(() => import('./conversion-content'), {
+  ssr: false
+})
 
 export default function CreateCampaignConversionPage() {
   return (

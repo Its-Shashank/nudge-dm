@@ -1,5 +1,12 @@
-import DashboardLayout from '@/components/dashboard-layout'
-import AttributionContent from './attribution-content'
+import dynamic from 'next/dynamic'
+
+const DashboardLayout = dynamic(() => import('@/components/dashboard-layout'), {
+  ssr: false
+})
+
+const AttributionContent = dynamic(() => import('./attribution-content'), {
+  ssr: false
+})
 
 export default function CreateCampaignAttributionPage() {
   return (

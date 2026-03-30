@@ -22,20 +22,20 @@ interface DashboardLayoutProps {
   children: React.ReactNode
 }
 
+const navItems = [
+  { icon: LayoutGrid, label: 'Dashboard', path: '/dashboard' },
+  { icon: Megaphone, label: 'Campaigns', path: '/campaigns' },
+  { icon: BarChart3, label: 'Analytics', path: '/analytics' },
+  { icon: Settings, label: 'Settings', path: '/settings' },
+]
+
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { theme, setTheme } = useTheme()
   const pathname = usePathname()
 
-  const navItems = [
-    { icon: LayoutGrid, label: 'Dashboard', path: '/dashboard' },
-    { icon: Megaphone, label: 'Campaigns', path: '/campaigns' },
-    { icon: BarChart3, label: 'Analytics', path: '/analytics' },
-    { icon: Settings, label: 'Settings', path: '/settings' },
-  ]
-
   const isActive = (path: string) => {
     if (path === '/dashboard') return pathname === '/dashboard'
-    return pathname.startsWith(path)
+    return pathname?.startsWith(path) || false
   }
 
   return (
