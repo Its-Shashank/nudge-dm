@@ -1,4 +1,4 @@
-// File: /app/frontend/app/page.tsx
+// File: /Users/shashankgaur/Dev/golive/nudge-dm/frontend/app/page.tsx
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
