@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
@@ -25,7 +25,6 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { theme, setTheme } = useTheme()
   const pathname = usePathname()
-  const [instagramConnected] = useState(true)
 
   const navItems = [
     { icon: LayoutGrid, label: 'Dashboard', path: '/dashboard' },
@@ -118,15 +117,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </div>
 
           <div className="flex items-center gap-4">
-            {instagramConnected && (
-              <div 
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full surface-container-high" 
-                data-testid="instagram-status"
-              >
-                <div className="w-2 h-2 rounded-full bg-[hsl(var(--success))] status-active" />
-                <span className="text-xs font-medium text-on-surface">Instagram Connected</span>
-              </div>
-            )}
+            <div 
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full surface-container-high" 
+              data-testid="instagram-status"
+            >
+              <div className="w-2 h-2 rounded-full bg-[hsl(var(--success))] status-active" />
+              <span className="text-xs font-medium text-on-surface">Instagram Connected</span>
+            </div>
 
             <Button variant="ghost" size="icon" className="relative" data-testid="notifications-button">
               <Bell className="w-5 h-5" />
