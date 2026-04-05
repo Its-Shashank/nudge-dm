@@ -19,9 +19,9 @@ node_modules/
 # Testing
 /coverage
 
-# Next.js
-/.next/
-/out/
+# Next.js (match any app subfolder, not only repo root)
+.next/
+out/
 next-env.d.ts
 *.tsbuildinfo
 
