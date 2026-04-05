@@ -33,12 +33,12 @@ export function generateRevenueData(period: string = '7days'): RevenueDataPoint[
 
 // Get all campaigns
 export function getCampaigns(): Campaign[] {
-  return campaignsData.campaigns;
+  return campaignsData.campaigns as Campaign[];
 }
 
 // Get active campaigns
 export function getActiveCampaigns(): Campaign[] {
-  return campaignsData.campaigns.filter(c => c.status === 'Active');
+  return getCampaigns().filter((c) => c.status === 'Active');
 }
 
 // Get dashboard metrics
@@ -86,10 +86,10 @@ export function getAnalyticsSummary(): AnalyticsSummary {
 
 // Get content
 export function getContent(): Content[] {
-  return contentData.content;
+  return contentData.content as Content[];
 }
 
 // Get insights
 export function getInsights(): Insight[] {
-  return insightsData.insights;
+  return insightsData.insights as Insight[];
 }

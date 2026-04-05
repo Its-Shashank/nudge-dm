@@ -19,10 +19,9 @@ node_modules/
 # Testing
 /coverage
 
-# Next.js (match any app subfolder, not only repo root)
+# Next.js
 .next/
 out/
-next-env.d.ts
 *.tsbuildinfo
 
 # Production builds
@@ -30,23 +29,22 @@ next-env.d.ts
 dist/
 dist
 
-# Environment files (comprehensive coverage)
-
+# Secrets and credentials
 *token.json*
 *credentials.json*
 
-# Logs and debug files
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 dump.rdb
 
-# System files
+# System
 .DS_Store
 *.pem
 
-# Python
+# Python (if you add tooling later)
 __pycache__/
 *pyc*
 venv/
@@ -62,26 +60,10 @@ chainlit.md
 # Deployment
 .vercel
 
-# Data and databases
-agenthub/agents/youtube/db
-
-# Archive files and large assets
-**/*.zip
-**/*.tar.gz
-**/*.tar
-**/*.tgz
-*.pack
-*.deb
-*.dylib
-
 # Build caches
 .cache/
 
-# Mobile development
-android-sdk/frontend/node_modules/.cache/default-development/2.pack
-frontend/node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
-frontend/node_modules/@next/swc-linux-arm64-musl/next-swc.linux-arm64-musl.node
-
-# Environment files
-*.env
-*.env.*
+# Env (do not commit secrets)
+.env
+.env.*
+!.env.example
