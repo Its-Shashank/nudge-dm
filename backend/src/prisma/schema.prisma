@@ -1,0 +1,119 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String             @id @default(uuid())
+  name          String
+  email         String             @unique
+  emailVerified Boolean            @default(false)
+  image         String?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  
+  // Better Auth relations
+  sessions      Session[]
+  accounts      Account[]
+
+  // Application relations
+  instagramAccounts InstagramAccount[]
+  automations       Automation[]
+  subscriptions     Subscription[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id           String    @id @default(uuid())
+  accountId    String
+  providerId   String
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken  String?
+  refreshToken String?
+  idToken      String?
+  expiresAt    DateTime?
+  password     String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model InstagramAccount {
+  id           String    @id @default(uuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  instagramId  String    @unique
+  username     String
+  accessToken  String    // Encrypted token at rest
+  refreshToken String?   // Encrypted token at rest (if any)
+  expiresAt    DateTime?
+  connectedAt  DateTime  @default(now())
+
+  @@map("instagram_account")
+}
+
+model Automation {
+  id          String       @id @default(uuid())
+  userId      String
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  enabled     Boolean      @default(true)
+  trigger     String       @default("COMMENT")
+  keywords    String       // Comma-separated keywords (stored in lowercase for consistency)
+  message     String
+  delay       Int          @default(0) // Delay in seconds
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  logs        MessageLog[]
+
+  @@map("automation")
+}
+
+model MessageLog {
+  id               String     @id @default(uuid())
+  automationId     String
+  automation       Automation @relation(fields: [automationId], references: [id], onDelete: Cascade)
+  instagramUserId  String     // ID of the user who commented
+  comment          String     // The comment text
+  message          String     // The DM sent
+  status           String     // SENT or FAILED
+  error            String?    // Failure reason if status is FAILED
+  createdAt        DateTime   @default(now())
+
+  @@map("message_log")
+}
+
+model Subscription {
+  id                     String   @id @default(uuid())
+  userId                 String   @unique
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeCustomerId       String
+  stripeSubscriptionId   String?
+  plan                   String   @default("FREE") // FREE, STARTER, PRO
+  status                 String   @default("active")
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  @@map("subscription")
+}
