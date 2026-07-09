@@ -4,14 +4,14 @@ import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
-  title: "NudgeDM — Automate Instagram DMs for Creators",
+  title: "NudgeDM - Turn Instagram Comments Into Customers",
   description:
-    "Send automated DMs with links, assets, and lead magnets to every follower who comments on your Instagram Reels, Posts, and Stories. Boost your affiliate revenue on autopilot.",
+    "Automatically send personalized Instagram DMs whenever someone comments on your posts. Scale your engagement and sales without lifting a finger.",
   keywords: [
     "Instagram automation",
     "auto DM",
@@ -21,18 +21,18 @@ export const metadata: Metadata = {
     "Instagram engagement",
   ],
   openGraph: {
-    title: "NudgeDM — Automate Instagram DMs for Creators",
+    title: "NudgeDM - Turn Instagram Comments Into Customers",
     description:
-      "Send automated DMs with links to every follower who comments. Boost your affiliate revenue on autopilot.",
+      "Automatically send personalized Instagram DMs whenever someone comments on your posts.",
     url: "https://nudgedm.com",
     siteName: "NudgeDM",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "NudgeDM — Automate Instagram DMs for Creators",
+    title: "NudgeDM - Turn Instagram Comments Into Customers",
     description:
-      "Send automated DMs with links to every follower who comments. Boost your affiliate revenue on autopilot.",
+      "Automatically send personalized Instagram DMs whenever someone comments on your posts.",
   },
 };
 
@@ -42,8 +42,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="antialiased">{children}</body>
+    <html lang="en" className={`${inter.variable} scroll-smooth`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
+        />
+      </head>
+      <body className="bg-surface text-on-surface antialiased">{children}</body>
     </html>
   );
 }
