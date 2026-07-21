@@ -32,24 +32,18 @@ export const FEATURES = [
     title: "Keyword Triggers",
     description:
       "Filter responses based on specific words to target only the most interested customers.",
-    iconBg: "bg-primary-fixed",
-    iconColor: "text-primary",
   },
   {
     icon: "person_pin",
     title: "Smart Personalization",
     description:
       "Include user names and custom variables to make every automated message feel personal and genuine.",
-    iconBg: "bg-secondary-fixed",
-    iconColor: "text-secondary",
   },
   {
     icon: "perm_media",
     title: "Rich Media Support",
     description:
       "Don't just send text. Embed high-quality images, product videos, or direct checkout links.",
-    iconBg: "bg-tertiary-fixed",
-    iconColor: "text-tertiary",
   },
 ] as const;
 

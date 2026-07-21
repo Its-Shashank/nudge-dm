@@ -11,8 +11,7 @@ import { TrustedBySection } from "@/components/marketing/trusted-by-section";
 export default function HomePage() {
   return (
     <>
-      <Navbar />
-      <main className="pt-16">
+      <main>
         <HeroSection />
         <TrustedBySection />
         <HowItWorksSection />

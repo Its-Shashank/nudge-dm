@@ -41,3 +41,7 @@ coverage/
 
 # Next.js
 next-env.d.ts
+
+# ai related
+.ai/
+CLAUDE.md
