@@ -8,3 +8,4 @@ export { Accordion, type AccordionProps, type AccordionItem } from "./accordion"
 export { Input, type InputProps } from "./input";
 export { Switch, type SwitchProps } from "./switch";
 export { Textarea, type TextareaProps } from "./textarea";
+export { Tabs, type TabsProps, type TabItem } from "./tabs";

@@ -6,6 +6,8 @@ export const DASHBOARD_NAV_LINKS = [
   { label: "Messages", href: "/dashboard/messages", icon: "mail" },
   { label: "Connections", href: "/dashboard/connections", icon: "link" },
   { label: "Activity", href: "/dashboard/activity", icon: "analytics" },
+  { label: "Billing", href: "/dashboard/billing", icon: "credit_card" },
+  { label: "Settings", href: "/dashboard/settings", icon: "settings" },
 ] as const;
 
 export const CONNECTED_INSTAGRAM_ACCOUNT = {

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AutomationTips } from "./automation-tips";
+import { AutomationsEmptyState } from "./automations-empty-state";
 import { AutomationsPagination } from "./automations-pagination";
 import { AutomationsTable } from "./automations-table";
 import { AutomationsToolbar } from "./automations-toolbar";
@@ -9,8 +10,11 @@ import { MOCK_AUTOMATIONS } from "@/lib/constants/dashboard";
 
 const PAGE_SIZE = 4;
 
+// Mocked pending real account/automation data — flip to preview the empty state.
+const SHOW_EMPTY_STATE = false;
+
 export function AutomationsView() {
-  const [automations, setAutomations] = useState(MOCK_AUTOMATIONS);
+  const [automations, setAutomations] = useState(SHOW_EMPTY_STATE ? [] : MOCK_AUTOMATIONS);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
@@ -38,6 +42,14 @@ export function AutomationsView() {
       prev.map((automation) =>
         automation.id === id ? { ...automation, enabled: !automation.enabled } : automation,
       ),
+    );
+  }
+
+  if (automations.length === 0) {
+    return (
+      <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center">
+        <AutomationsEmptyState />
+      </div>
     );
   }
 
