@@ -32,10 +32,12 @@ export function InstagramConnectEmptyState() {
         </div>
 
         <div className="mt-8 flex flex-col items-center gap-4">
-          <Button type="button" size="lg" className="shadow-xl hover:scale-[1.03]">
-            <Icon name="add_link" />
-            Connect Instagram
-          </Button>
+          <a href="/api/instagram/connect">
+            <Button type="button" size="lg" className="shadow-xl hover:scale-[1.03]">
+              <Icon name="add_link" />
+              Connect Instagram
+            </Button>
+          </a>
 
           <Link
             href="#"

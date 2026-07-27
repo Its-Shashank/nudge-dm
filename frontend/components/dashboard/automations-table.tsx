@@ -8,9 +8,10 @@ const COLUMNS = ["Automation", "Trigger", "Keywords", "Messages Sent", "Status",
 export interface AutomationsTableProps {
   automations: Automation[];
   onToggle: (id: string) => void;
+  onDelete: (id: string, name: string) => void;
 }
 
-export function AutomationsTable({ automations, onToggle }: AutomationsTableProps) {
+export function AutomationsTable({ automations, onToggle, onDelete }: AutomationsTableProps) {
   if (automations.length === 0) {
     return (
       <div className="flex flex-col items-center gap-2 px-6 py-16 text-center">
@@ -84,13 +85,23 @@ export function AutomationsTable({ automations, onToggle }: AutomationsTableProp
                   />
                 </td>
                 <td className="px-6 py-4 text-right">
-                  <button
-                    type="button"
-                    aria-label={`More actions for ${automation.name}`}
-                    className="rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container-low"
-                  >
-                    <Icon name="more_horiz" />
-                  </button>
+                  <details className="group relative inline-block text-left">
+                    <summary
+                      aria-label={`More actions for ${automation.name}`}
+                      className="flex h-8 w-8 cursor-pointer list-none items-center justify-center rounded-full text-on-surface-variant transition-colors hover:bg-surface-container-low [&::-webkit-details-marker]:hidden"
+                    >
+                      <Icon name="more_horiz" />
+                    </summary>
+                    <div className="absolute right-0 top-9 z-10 w-40 overflow-hidden rounded-xl border border-line bg-white py-1 shadow-xl">
+                      <button
+                        type="button"
+                        onClick={() => onDelete(automation.id, automation.name)}
+                        className="block w-full px-4 py-2 text-left text-body-md text-error hover:bg-error/5"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </details>
                 </td>
               </tr>
             );

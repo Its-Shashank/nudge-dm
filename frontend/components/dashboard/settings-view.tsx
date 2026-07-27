@@ -5,6 +5,8 @@ import { SettingsProfileTab } from "./settings-profile-tab";
 import { SettingsInstagramTab } from "./settings-instagram-tab";
 import { SettingsBillingTab } from "./settings-billing-tab";
 import { SettingsDangerZoneTab } from "./settings-danger-zone-tab";
+import type { ConnectedInstagramAccount } from "@/lib/api/instagram";
+import type { SubscriptionDetails } from "@/lib/api/billing";
 
 const SETTINGS_TABS = [
   { id: "profile", label: "Profile" },
@@ -13,7 +15,12 @@ const SETTINGS_TABS = [
   { id: "danger", label: "Danger Zone" },
 ];
 
-export function SettingsView() {
+export interface SettingsViewProps {
+  account: ConnectedInstagramAccount | null;
+  subscription: SubscriptionDetails;
+}
+
+export function SettingsView({ account, subscription }: SettingsViewProps) {
   return (
     <div className="mx-auto max-w-3xl">
       <div className="mb-8">
@@ -29,11 +36,11 @@ export function SettingsView() {
             case "profile":
               return <SettingsProfileTab />;
             case "instagram":
-              return <SettingsInstagramTab />;
+              return <SettingsInstagramTab account={account} />;
             case "billing":
-              return <SettingsBillingTab />;
+              return <SettingsBillingTab subscription={subscription} />;
             case "danger":
-              return <SettingsDangerZoneTab />;
+              return <SettingsDangerZoneTab isConnected={Boolean(account)} />;
             default:
               return null;
           }

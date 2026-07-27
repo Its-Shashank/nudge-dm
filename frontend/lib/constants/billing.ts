@@ -1,24 +1,38 @@
-export const CURRENT_PLAN_DETAILS = {
-  name: "Professional",
-  badge: "PRO PLAN",
-  price: 49,
-  period: "month",
-  cycle: "Monthly Billing",
-  description:
-    "You're currently enjoying unlimited automation templates, advanced analytics, and priority DM delivery.",
-};
-
-export interface UsageMetric {
-  label: string;
-  used: number;
-  limit: number;
-  meta?: string;
+// Plan pricing/copy isn't returned by GET /billing/subscription (Stripe owns
+// it, and the backend doesn't expose it yet) — this is static product-catalog
+// data, not user data, so a client-side lookup keyed by the real `plan`
+// string from the API is the honest way to fill in price/description.
+export interface PlanCatalogEntry {
+  name: string;
+  badge: string;
+  price: number;
+  description: string;
+  upgradeTo?: "STARTER" | "PRO";
 }
 
-export const BILLING_USAGE: UsageMetric[] = [
-  { label: "Messages Sent", used: 4750, limit: 5000, meta: "Renews on Aug 24, 2026" },
-  { label: "Active Automations", used: 12, limit: 25 },
-];
+export const PLAN_CATALOG: Record<string, PlanCatalogEntry> = {
+  FREE: {
+    name: "Free",
+    badge: "FREE PLAN",
+    price: 0,
+    description: "Up to 100 messages a month with 1 active automation. Upgrade any time.",
+    upgradeTo: "STARTER",
+  },
+  STARTER: {
+    name: "Starter",
+    badge: "STARTER PLAN",
+    price: 19,
+    description: "5,000 messages a month with unlimited automations and story-reply triggers.",
+    upgradeTo: "PRO",
+  },
+  PRO: {
+    name: "Professional",
+    badge: "PRO PLAN",
+    price: 49,
+    description:
+      "Unlimited automation templates, advanced analytics, and priority DM delivery.",
+  },
+};
 
 export const PAYMENT_METHOD = {
   brand: "Visa",

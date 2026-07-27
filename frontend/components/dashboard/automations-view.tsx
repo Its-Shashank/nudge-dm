@@ -6,15 +6,16 @@ import { AutomationsEmptyState } from "./automations-empty-state";
 import { AutomationsPagination } from "./automations-pagination";
 import { AutomationsTable } from "./automations-table";
 import { AutomationsToolbar } from "./automations-toolbar";
-import { MOCK_AUTOMATIONS } from "@/lib/constants/dashboard";
+import type { Automation } from "@/types/automation";
 
 const PAGE_SIZE = 4;
 
-// Mocked pending real account/automation data — flip to preview the empty state.
-const SHOW_EMPTY_STATE = false;
+export interface AutomationsViewProps {
+  initialAutomations: Automation[];
+}
 
-export function AutomationsView() {
-  const [automations, setAutomations] = useState(SHOW_EMPTY_STATE ? [] : MOCK_AUTOMATIONS);
+export function AutomationsView({ initialAutomations }: AutomationsViewProps) {
+  const [automations, setAutomations] = useState(initialAutomations);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
@@ -37,12 +38,42 @@ export function AutomationsView() {
     setPage(1);
   }
 
-  function handleToggle(id: string) {
+  async function handleToggle(id: string) {
+    const target = automations.find((a) => a.id === id);
+    if (!target) return;
+    const nextEnabled = !target.enabled;
+
+    // Optimistic update — revert if the request fails.
     setAutomations((prev) =>
-      prev.map((automation) =>
-        automation.id === id ? { ...automation, enabled: !automation.enabled } : automation,
-      ),
+      prev.map((automation) => (automation.id === id ? { ...automation, enabled: nextEnabled } : automation)),
     );
+
+    try {
+      const res = await fetch(`/api/automations/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ enabled: nextEnabled }),
+      });
+      if (!res.ok) throw new Error("Failed to update automation");
+    } catch {
+      setAutomations((prev) =>
+        prev.map((automation) => (automation.id === id ? { ...automation, enabled: !nextEnabled } : automation)),
+      );
+    }
+  }
+
+  async function handleDelete(id: string, name: string) {
+    if (!window.confirm(`Delete "${name}"? This can't be undone.`)) return;
+
+    const previous = automations;
+    setAutomations((prev) => prev.filter((automation) => automation.id !== id));
+
+    try {
+      const res = await fetch(`/api/automations/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete automation");
+    } catch {
+      setAutomations(previous);
+    }
   }
 
   if (automations.length === 0) {
@@ -66,7 +97,7 @@ export function AutomationsView() {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
-        <AutomationsTable automations={paginated} onToggle={handleToggle} />
+        <AutomationsTable automations={paginated} onToggle={handleToggle} onDelete={handleDelete} />
         {filtered.length > 0 && (
           <AutomationsPagination
             page={currentPage}

@@ -1,10 +1,15 @@
+import type { DashboardStats } from "@/lib/api/dashboard";
 import { AutomationLogsCard } from "./automation-logs-card";
 import { DashboardStatCards } from "./dashboard-stat-cards";
 import { PlatformStatusCard } from "./platform-status-card";
 import { QuickActionsCard } from "./quick-actions-card";
 import { RecentDmsCard } from "./recent-dms-card";
 
-export function DashboardOverview() {
+export interface DashboardOverviewProps {
+  stats: DashboardStats;
+}
+
+export function DashboardOverview({ stats }: DashboardOverviewProps) {
   return (
     <div>
       <div className="mb-8">
@@ -14,12 +19,12 @@ export function DashboardOverview() {
         </p>
       </div>
 
-      <DashboardStatCards />
+      <DashboardStatCards stats={stats} />
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12">
         <div className="space-y-6 lg:col-span-8">
-          <RecentDmsCard />
-          <AutomationLogsCard />
+          <RecentDmsCard activity={stats.recentActivity} />
+          <AutomationLogsCard activity={stats.recentActivity} />
         </div>
         <div className="space-y-6 lg:col-span-4">
           <QuickActionsCard />

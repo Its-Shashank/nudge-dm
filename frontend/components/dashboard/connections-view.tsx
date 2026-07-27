@@ -1,5 +1,6 @@
 import { Icon } from "@/components/ui/icon";
 import { ConnectedAccountCard } from "./connected-account-card";
+import type { ConnectedInstagramAccount } from "@/lib/api/instagram";
 
 const GRANTED_PERMISSIONS = [
   { icon: "comment", label: "Read comments & story replies" },
@@ -27,7 +28,7 @@ function PermissionsCard() {
   );
 }
 
-function SyncStatusCard() {
+function SyncStatusCard({ connectedAt }: { connectedAt: string }) {
   return (
     <div className="rounded-2xl border border-line bg-white p-6 shadow-sm">
       <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-on-surface-variant">
@@ -35,8 +36,10 @@ function SyncStatusCard() {
       </p>
       <div className="mt-4 flex items-center gap-2">
         <span className="h-2 w-2 shrink-0 rounded-full bg-success" />
-        <p className="text-body-md text-ink">Synced</p>
-        <span className="text-[12px] text-on-surface-variant">2 minutes ago</span>
+        <p className="text-body-md text-ink">Connected since</p>
+        <span className="text-[12px] text-on-surface-variant">
+          {new Date(connectedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+        </span>
       </div>
       <div className="mt-4 flex items-center gap-2 text-on-surface-variant/70">
         <Icon name="verified_user" className="text-[16px]" />
@@ -46,7 +49,11 @@ function SyncStatusCard() {
   );
 }
 
-export function ConnectionsView() {
+export interface ConnectionsViewProps {
+  account: ConnectedInstagramAccount;
+}
+
+export function ConnectionsView({ account }: ConnectionsViewProps) {
   return (
     <div>
       <div className="mb-8">
@@ -57,11 +64,11 @@ export function ConnectionsView() {
       </div>
 
       <div className="space-y-6">
-        <ConnectedAccountCard />
+        <ConnectedAccountCard account={account} />
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <PermissionsCard />
-          <SyncStatusCard />
+          <SyncStatusCard connectedAt={account.connectedAt} />
         </div>
       </div>
     </div>

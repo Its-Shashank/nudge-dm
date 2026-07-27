@@ -13,14 +13,18 @@ export function QuickActionsCard() {
             Create Automation
           </Button>
         </Link>
-        <Button type="button" variant="secondary" className="w-full">
-          <Icon name="link" />
-          Connect Instagram
-        </Button>
-        <Button type="button" variant="secondary" className="w-full">
-          <Icon name="upgrade" />
-          Upgrade Plan
-        </Button>
+        <Link href="/dashboard/connections">
+          <Button type="button" variant="secondary" className="w-full">
+            <Icon name="link" />
+            Connect Instagram
+          </Button>
+        </Link>
+        <Link href="/dashboard/billing">
+          <Button type="button" variant="secondary" className="w-full">
+            <Icon name="upgrade" />
+            Upgrade Plan
+          </Button>
+        </Link>
       </div>
     </div>
   );

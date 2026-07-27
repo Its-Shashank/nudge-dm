@@ -10,12 +10,15 @@ import { AutomationNameCard } from "./automation-name-card";
 import { AutomationStatusCard } from "./automation-status-card";
 import { AutomationTriggerCard } from "./automation-trigger-card";
 import { CreateAutomationActionsBar } from "./create-automation-actions-bar";
+import { createAutomationAction } from "@/app/dashboard/automations/new/actions";
 import { DEFAULT_AUTOMATION_DRAFT } from "@/lib/constants/dashboard";
 import type { AutomationDraft } from "@/types/automation";
 
 export function CreateAutomationView() {
   const router = useRouter();
   const [draft, setDraft] = useState<AutomationDraft>(DEFAULT_AUTOMATION_DRAFT);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   function updateDraft<K extends keyof AutomationDraft>(key: K, value: AutomationDraft[K]) {
     setDraft((prev) => ({ ...prev, [key]: value }));
@@ -41,8 +44,27 @@ export function CreateAutomationView() {
     router.push("/dashboard/automations");
   }
 
-  function handleSave() {
-    router.push("/dashboard/automations");
+  async function handleSave() {
+    if (!draft.name.trim()) {
+      setSaveError("Name is required.");
+      return;
+    }
+    if (draft.keywords.length === 0) {
+      setSaveError("Add at least one keyword.");
+      return;
+    }
+    if (!draft.message.trim()) {
+      setSaveError("Message cannot be empty.");
+      return;
+    }
+
+    setIsSaving(true);
+    setSaveError(null);
+    const result = await createAutomationAction(draft);
+    if (result?.error) {
+      setSaveError(result.error);
+      setIsSaving(false);
+    }
   }
 
   return (
@@ -83,6 +105,8 @@ export function CreateAutomationView() {
         onDiscard={handleDiscard}
         onCancel={handleCancel}
         onSave={handleSave}
+        isSaving={isSaving}
+        error={saveError}
       />
     </div>
   );

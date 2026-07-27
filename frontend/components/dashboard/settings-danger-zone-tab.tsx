@@ -1,13 +1,29 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
+import { disconnectInstagramAction } from "@/app/dashboard/connections/actions";
 
 type DangerAction = "disconnect" | "delete";
 
-export function SettingsDangerZoneTab() {
+export interface SettingsDangerZoneTabProps {
+  isConnected: boolean;
+}
+
+export function SettingsDangerZoneTab({ isConnected }: SettingsDangerZoneTabProps) {
+  const router = useRouter();
   const [confirming, setConfirming] = useState<DangerAction | null>(null);
+  const [isDisconnecting, setIsDisconnecting] = useState(false);
+
+  async function handleDisconnect() {
+    setIsDisconnecting(true);
+    await disconnectInstagramAction();
+    setIsDisconnecting(false);
+    setConfirming(null);
+    router.refresh();
+  }
 
   return (
     <div className="rounded-2xl border border-error/20 bg-error-container/10 p-6 shadow-xl">
@@ -28,10 +44,17 @@ export function SettingsDangerZoneTab() {
           {confirming === "disconnect" ? (
             <div className="flex shrink-0 items-center gap-3">
               <span className="text-body-md font-medium text-error">Are you sure?</span>
-              <Button type="button" size="sm" className="border-error bg-error text-on-error hover:bg-error/90" variant="secondary" onClick={() => setConfirming(null)}>
-                Yes, Disconnect
+              <Button
+                type="button"
+                size="sm"
+                className="border-error bg-error text-on-error hover:bg-error/90"
+                variant="secondary"
+                onClick={handleDisconnect}
+                disabled={isDisconnecting}
+              >
+                {isDisconnecting ? "Disconnecting…" : "Yes, Disconnect"}
               </Button>
-              <Button type="button" size="sm" variant="ghost" onClick={() => setConfirming(null)}>
+              <Button type="button" size="sm" variant="ghost" onClick={() => setConfirming(null)} disabled={isDisconnecting}>
                 Cancel
               </Button>
             </div>
@@ -40,11 +63,12 @@ export function SettingsDangerZoneTab() {
               type="button"
               variant="ghost"
               size="sm"
-              className="shrink-0 text-error hover:text-error/80"
+              className="shrink-0 text-error hover:text-error/80 disabled:text-on-surface-variant"
               onClick={() => setConfirming("disconnect")}
+              disabled={!isConnected}
             >
               <Icon name="link_off" className="text-[16px]" />
-              Disconnect
+              {isConnected ? "Disconnect" : "Not connected"}
             </Button>
           )}
         </div>
