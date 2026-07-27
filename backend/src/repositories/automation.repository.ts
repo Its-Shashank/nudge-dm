@@ -6,6 +6,7 @@ export class AutomationRepository {
     return prisma.automation.findMany({
       where: { userId },
       orderBy: { createdAt: "desc" },
+      include: { _count: { select: { logs: true } } },
     });
   }
 

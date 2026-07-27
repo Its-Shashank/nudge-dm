@@ -93,11 +93,27 @@ async function runTests() {
   logger.info(`✔ Connect URL fetched successfully: ${connBody.url}`);
 
   logger.info("Test 5: Simulating Instagram OAuth Callback...");
-  const cb = await request("/instagram/callback?code=mock_code");
+  const connectUrl = new URL(connBody.url!);
+  const state = connectUrl.searchParams.get("state");
+  if (!state) {
+    throw new Error("Connect URL did not include a signed state param");
+  }
+  const cb = await request(`/instagram/callback?code=mock_code&state=${encodeURIComponent(state)}`);
   if (cb.status !== 200 && cb.status !== 302) {
     throw new Error(`Callback simulation failed: Status ${cb.status}`);
   }
   logger.info("✔ OAuth callback processed and account linked!");
+
+  logger.info("Test 5b: Callback rejects a missing/invalid state param...");
+  const cbNoState = await request("/instagram/callback?code=mock_code");
+  if (cbNoState.status !== 400) {
+    throw new Error(`Expected 400 for missing state, got ${cbNoState.status}`);
+  }
+  const cbBadState = await request("/instagram/callback?code=mock_code&state=garbage");
+  if (cbBadState.status !== 401) {
+    throw new Error(`Expected 401 for invalid state, got ${cbBadState.status}`);
+  }
+  logger.info("✔ Callback correctly rejects missing/invalid state!");
 
   logger.info("Test 6: Verify Linked Instagram Account...");
   const account = await request("/instagram/account");

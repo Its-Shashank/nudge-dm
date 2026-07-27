@@ -33,7 +33,7 @@ export class BillingService {
     if (this.isSandbox()) {
       logger.info(`[Sandbox Mode] Creating mock checkout session for User ${userId} subscribing to ${uppercasePlan}`);
       // Return a callback URL that redirects to dashboard with simulation params
-      return `${process.env.BETTER_AUTH_URL || "http://localhost:5001"}/billing/sandbox-checkout-success?userId=${userId}&plan=${uppercasePlan}`;
+      return `${process.env.API_URL || "http://localhost:5001"}/billing/sandbox-checkout-success?userId=${userId}&plan=${uppercasePlan}`;
     }
 
     try {
@@ -76,8 +76,8 @@ export class BillingService {
           },
         ],
         mode: "subscription",
-        success_url: `${process.env.BETTER_AUTH_URL || "http://localhost:3000"}/dashboard?billing=success`,
-        cancel_url: `${process.env.BETTER_AUTH_URL || "http://localhost:3000"}/dashboard/billing?billing=cancelled`,
+        success_url: `${process.env.FRONTEND_URL || "http://localhost:3000"}/dashboard/billing?billing=success`,
+        cancel_url: `${process.env.FRONTEND_URL || "http://localhost:3000"}/dashboard/billing?billing=cancelled`,
         metadata: {
           userId,
           plan: uppercasePlan,

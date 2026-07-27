@@ -1,10 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { instagramService } from "../services/instagram.service";
 import { automationService } from "../services/automation.service";
-import { isDbConnected } from "../config/db";
-import { auth } from "../lib/auth";
 import { UnauthorizedError, BadRequestError } from "../utils/errors";
 import { logger } from "../utils/logger";
+import { signOAuthState, verifyOAuthState } from "../utils/oauth-state";
 import crypto from "crypto";
 
 interface RawBodyRequest extends Request {
@@ -13,7 +12,9 @@ interface RawBodyRequest extends Request {
 
 export const connectInstagram = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const url = instagramService.getConnectUrl();
+    const userId = (req as any).user.id;
+    const state = signOAuthState(userId);
+    const url = instagramService.getConnectUrl(state);
     res.status(200).json({ url });
     return;
   } catch (error) {
@@ -21,33 +22,31 @@ export const connectInstagram = async (req: Request, res: Response, next: NextFu
   }
 };
 
+// Public route — Meta (or the sandbox mock) redirects the browser here
+// directly, so there's no session cookie to read. The signed `state` param
+// from connectInstagram is the only way to recover which user this is for.
 export const instagramCallback = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const code = req.query.code as string;
-
-    let userId = "mock-user-123";
-
-    if (isDbConnected) {
-      const sessionRes = await auth.api.getSession({ headers: req.headers });
-      if (sessionRes?.user?.id) {
-        userId = sessionRes.user.id;
-      }
-    } else {
-      const token =
-        req.cookies?.["better-auth.session_token"] ||
-        req.headers.authorization?.split(" ")[1];
-      if (token === "mock-session-token-123") {
-        userId = "mock-user-123";
-      }
-    }
+    const state = req.query.state as string;
 
     if (!code) {
       throw new BadRequestError("Auth code is missing from Instagram redirect callback");
     }
+    if (!state) {
+      throw new BadRequestError("State param is missing from Instagram redirect callback");
+    }
+
+    let userId: string;
+    try {
+      userId = verifyOAuthState(state);
+    } catch (err: any) {
+      throw new UnauthorizedError(err.message || "Invalid or expired OAuth state param");
+    }
 
     await instagramService.handleOAuthCallback(code, userId);
 
-    const redirectUrl = `${process.env.BETTER_AUTH_URL || "http://localhost:3000"}/dashboard?instagram=connected`;
+    const redirectUrl = `${process.env.FRONTEND_URL || "http://localhost:3000"}/dashboard/connections?instagram=connected`;
     res.redirect(redirectUrl);
     return;
   } catch (error) {

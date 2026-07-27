@@ -7,16 +7,16 @@ export class InstagramService {
     return process.env.SANDBOX_MODE === "true";
   }
 
-  getConnectUrl(): string {
+  getConnectUrl(state: string): string {
     if (this.isSandbox()) {
-      return `${process.env.BETTER_AUTH_URL || "http://localhost:5001"}/instagram/callback?code=mock_oauth_code_123`;
+      return `${process.env.API_URL || "http://localhost:5001"}/instagram/callback?code=mock_oauth_code_123&state=${encodeURIComponent(state)}`;
     }
 
     const clientId = process.env.FB_CLIENT_ID;
     const redirectUri = encodeURIComponent(process.env.FB_REDIRECT_URI || "");
     const scope = "instagram_basic,instagram_manage_comments,instagram_manage_messages,pages_show_list,pages_read_engagement";
-    
-    return `https://www.facebook.com/v19.0/dialog/oauth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
+
+    return `https://www.facebook.com/v19.0/dialog/oauth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&state=${encodeURIComponent(state)}`;
   }
 
   async handleOAuthCallback(code: string, userId: string) {

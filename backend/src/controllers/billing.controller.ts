@@ -70,7 +70,7 @@ export const sandboxCheckoutSuccess = async (req: Request, res: Response, next: 
 
     await billingService.handleSandboxCheckoutCompleted(userId, plan);
 
-    const redirectUrl = `${process.env.BETTER_AUTH_URL || "http://localhost:3000"}/dashboard?billing=success&plan=${plan}`;
+    const redirectUrl = `${process.env.FRONTEND_URL || "http://localhost:3000"}/dashboard/billing?billing=success&plan=${plan}`;
     res.redirect(redirectUrl);
     return;
   } catch (error) {
