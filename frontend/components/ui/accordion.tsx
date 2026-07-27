@@ -25,7 +25,7 @@ export function Accordion({ items, className }: AccordionProps) {
         return (
           <div
             key={item.question}
-            className="bg-surface-container-low rounded-xl border border-outline-variant transition-all hover:bg-surface-container-high"
+            className="bg-white rounded-2xl border border-line transition-all hover:bg-surface-container-low"
           >
             <button
               type="button"
@@ -33,7 +33,7 @@ export function Accordion({ items, className }: AccordionProps) {
               onClick={() => setOpenIndex(isOpen ? null : index)}
               aria-expanded={isOpen}
             >
-              <span className="text-headline-md text-on-surface pr-md">
+              <span className="text-headline-md text-ink pr-md">
                 {item.question}
               </span>
               <Icon

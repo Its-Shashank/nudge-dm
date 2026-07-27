@@ -5,10 +5,10 @@ import { Section } from "@/components/ui/section";
 export function CtaSection() {
   return (
     <Section className="py-16 text-center relative overflow-hidden">
-      <div className="absolute inset-0 brand-gradient opacity-10 blur-3xl -z-10" />
+      <div className="absolute inset-0 instagram-gradient opacity-10 blur-3xl -z-10" />
       <Container className="max-w-3xl">
-        <div className="py-12 border border-outline-variant bg-white rounded-3xl shadow-xl px-8">
-          <h2 className="text-headline-lg text-on-surface mb-4">
+        <div className="py-12 border border-line bg-white rounded-3xl shadow-xl px-8">
+          <h2 className="text-headline-lg text-ink mb-4">
             Ready to automate your Instagram growth?
           </h2>
           <p className="text-body-lg text-on-surface-variant mb-8">

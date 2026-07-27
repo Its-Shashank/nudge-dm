@@ -11,9 +11,9 @@ const LOGO_PLACEHOLDERS = [
 
 export function TrustedBySection() {
   return (
-    <Section className="py-12 border-y border-outline-variant bg-surface-container-lowest">
+    <Section className="py-12 border-y border-line bg-surface-container-lowest">
       <Container>
-        <p className="text-center text-label-sm text-outline uppercase tracking-widest mb-8">
+        <p className="text-center font-mono text-[11px] text-on-surface-variant uppercase tracking-[0.14em] mb-8">
           Loved by 10,000+ creators and brands
         </p>
         <div className="flex flex-wrap justify-center items-center gap-16 opacity-50 grayscale">

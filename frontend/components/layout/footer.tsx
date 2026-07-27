@@ -4,10 +4,17 @@ import { FOOTER_LINKS } from "@/lib/constants/marketing";
 
 export function Footer() {
   return (
-    <footer className="w-full py-12 bg-surface-container-low border-t border-outline-variant">
+    <footer className="w-full py-12 bg-white border-t border-line">
       <Container className="flex flex-col md:flex-row justify-between items-start gap-gutter">
         <div className="flex flex-col gap-4">
-          <span className="text-headline-md font-bold text-primary">NudgeDM</span>
+          <Link href="/" className="flex items-center gap-2">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full instagram-gradient">
+              <span className="h-2 w-2 rounded-full bg-white" />
+            </span>
+            <span className="font-display text-[17px] font-semibold tracking-tight text-ink">
+              NudgeDM
+            </span>
+          </Link>
           <p className="max-w-xs text-label-sm text-on-surface-variant">
             The #1 Instagram automation platform for creators who want to scale
             engagement and revenue.
@@ -20,7 +27,7 @@ export function Footer() {
           <FooterColumn title="Resources" links={FOOTER_LINKS.resources} />
         </div>
 
-        <div className="w-full pt-6 mt-6 border-t border-outline-variant md:border-none flex justify-between items-center">
+        <div className="w-full pt-6 mt-6 border-t border-line md:border-none flex justify-between items-center">
           <span className="text-label-sm text-on-surface-variant">
             © {new Date().getFullYear()} NudgeDM Inc. All rights reserved.
           </span>
@@ -43,12 +50,12 @@ function FooterColumn({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-label-sm text-primary font-bold">{title}</p>
+      <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink">{title}</p>
       {links.map((link) => (
         <Link
           key={link.label}
           href={link.href}
-          className="text-label-sm text-on-surface-variant hover:text-primary underline transition-all"
+          className="text-label-sm text-on-surface-variant hover:text-violet transition-all"
         >
           {link.label}
         </Link>

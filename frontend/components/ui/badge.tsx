@@ -3,20 +3,27 @@ import { Icon } from "./icon";
 
 export interface BadgeProps {
   icon?: string;
+  dot?: boolean;
   children: React.ReactNode;
   className?: string;
 }
 
-export function Badge({ icon, children, className }: BadgeProps) {
+export function Badge({ icon, dot = true, children, className }: BadgeProps) {
   return (
-    <div
+    <span
       className={cn(
-        "inline-flex items-center gap-1 px-2 py-1 bg-surface-container-high rounded-full",
+        "inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-violet",
         className,
       )}
     >
-      {icon && <Icon name={icon} className="text-primary scale-75" />}
-      <span className="text-label-sm text-primary">{children}</span>
-    </div>
+      {dot && (
+        <span className="relative flex h-1.5 w-1.5 shrink-0">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet opacity-75" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-violet" />
+        </span>
+      )}
+      {icon && <Icon name={icon} className="text-[14px]" />}
+      {children}
+    </span>
   );
 }

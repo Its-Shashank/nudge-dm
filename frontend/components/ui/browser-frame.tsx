@@ -18,9 +18,9 @@ export function BrowserFrame({
 }: BrowserFrameProps) {
   return (
     <div className={cn("w-full relative group", className)}>
-      <div className="absolute -inset-4 bg-gradient-to-tr from-primary/10 to-secondary/10 rounded-[2rem] blur-2xl group-hover:blur-3xl transition-all opacity-50" />
-      <div className="relative bg-surface-container-lowest rounded-xl border border-outline-variant shadow-2xl overflow-hidden">
-        <div className="h-8 bg-surface-container-low border-b border-outline-variant flex items-center px-4 gap-1">
+      <div className="absolute -inset-4 instagram-gradient rounded-[2rem] opacity-20 blur-3xl group-hover:opacity-30 transition-all" />
+      <div className="relative bg-surface-container-lowest rounded-xl border border-line shadow-2xl overflow-hidden">
+        <div className="h-8 bg-surface-container-low border-b border-line flex items-center px-4 gap-1">
           <div className="w-3 h-3 rounded-full bg-error/40" />
           <div className="w-3 h-3 rounded-full bg-tertiary/40" />
           <div className="w-3 h-3 rounded-full bg-secondary/40" />
@@ -54,7 +54,7 @@ export function ImageCard({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-outline-variant shadow-xl overflow-hidden bg-white p-2",
+        "rounded-2xl border border-line shadow-xl overflow-hidden bg-white p-2",
         wrapperClassName,
       )}
     >

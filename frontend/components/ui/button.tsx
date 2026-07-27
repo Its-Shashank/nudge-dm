@@ -11,11 +11,11 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "brand-gradient text-white shadow-lg hover:opacity-90 active:scale-95 transition-all",
+    "instagram-gradient text-white shadow-lg hover:opacity-90 active:scale-95 transition-all",
   secondary:
-    "border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-low transition-all",
+    "border border-line bg-white text-ink hover:bg-surface-container-low transition-all",
   ghost:
-    "text-on-surface-variant hover:text-primary bg-transparent transition-colors",
+    "text-on-surface-variant hover:text-violet bg-transparent transition-colors",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
