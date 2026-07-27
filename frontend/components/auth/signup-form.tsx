@@ -1,15 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
+import { signupAction, type SignupFormState } from "@/app/signup/actions";
+
+const initialState: SignupFormState = {};
 
 export function SignupForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [state, formAction, isPending] = useActionState(signupAction, initialState);
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
+    <form action={formAction} className="space-y-5">
+      {state.error && (
+        <div
+          role="alert"
+          className="rounded-lg border border-error/30 bg-error/5 px-4 py-3 text-body-md text-error"
+        >
+          {state.error}
+        </div>
+      )}
+
       <div className="space-y-1.5">
         <label
           htmlFor="name"
@@ -74,8 +87,8 @@ export function SignupForm() {
         </div>
       </div>
 
-      <Button type="submit" size="lg" className="w-full">
-        Create Account
+      <Button type="submit" size="lg" className="w-full" disabled={isPending}>
+        {isPending ? "Creating account…" : "Create Account"}
       </Button>
 
       <div className="flex items-center gap-4 py-1">

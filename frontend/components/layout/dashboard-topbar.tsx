@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
+import { logoutAction } from "@/app/dashboard/actions";
 
 export function DashboardTopbar() {
   return (
@@ -21,16 +22,38 @@ export function DashboardTopbar() {
         >
           <Icon name="notifications" />
         </button>
-        <button
-          type="button"
+        <Link
+          href="/dashboard/settings"
           aria-label="Settings"
           className="rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container-low hover:text-ink"
         >
           <Icon name="settings" />
-        </button>
-        <span className="ml-2 flex h-8 w-8 items-center justify-center rounded-full border border-line bg-surface-container-high text-on-surface-variant">
-          <Icon name="person" className="text-[18px]" />
-        </span>
+        </Link>
+
+        <details className="group relative ml-2">
+          <summary
+            aria-label="Account menu"
+            className="flex h-8 w-8 cursor-pointer list-none items-center justify-center rounded-full border border-line bg-surface-container-high text-on-surface-variant [&::-webkit-details-marker]:hidden"
+          >
+            <Icon name="person" className="text-[18px]" />
+          </summary>
+          <div className="absolute right-0 top-11 z-50 w-44 overflow-hidden rounded-xl border border-line bg-white py-1 shadow-xl">
+            <Link
+              href="/dashboard/settings"
+              className="block px-4 py-2 text-body-md text-ink hover:bg-surface-container-low"
+            >
+              Settings
+            </Link>
+            <form action={logoutAction}>
+              <button
+                type="submit"
+                className="block w-full px-4 py-2 text-left text-body-md text-error hover:bg-error/5"
+              >
+                Log out
+              </button>
+            </form>
+          </div>
+        </details>
       </div>
     </header>
   );

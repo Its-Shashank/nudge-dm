@@ -1,16 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
+import { loginAction, type LoginFormState } from "@/app/login/actions";
+
+const initialState: LoginFormState = {};
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [state, formAction, isPending] = useActionState(loginAction, initialState);
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
+    <form action={formAction} className="space-y-5">
+      {state.error && (
+        <div
+          role="alert"
+          className="rounded-lg border border-error/30 bg-error/5 px-4 py-3 text-body-md text-error"
+        >
+          {state.error}
+        </div>
+      )}
+
       <div className="space-y-1.5">
         <label
           htmlFor="email"
@@ -66,8 +79,8 @@ export function LoginForm() {
         </div>
       </div>
 
-      <Button type="submit" size="lg" className="w-full">
-        Log In
+      <Button type="submit" size="lg" className="w-full" disabled={isPending}>
+        {isPending ? "Logging in…" : "Log In"}
       </Button>
 
       <div className="flex items-center gap-4 py-1">
